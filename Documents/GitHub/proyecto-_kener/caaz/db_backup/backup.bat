@@ -15,7 +15,7 @@ set Segundos=%Time:~6,2%
 :: usuario db
 set dbuser=root
 :: Password de user
-set dbpass=Soporte01
+set dbpass=Password
 :: Database
 set database= caaz
 
