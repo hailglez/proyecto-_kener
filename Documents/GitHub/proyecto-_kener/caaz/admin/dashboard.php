@@ -36,13 +36,13 @@
                            Inicio</a>
                     </li>
                     <?php
-                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==3
-                    or $_SESSION['permission']==4){ 
+                    if($_SESSION['permission']==1 or $_SESSION['permission']==2 or $_SESSION['permission']==2.5
+                      or $_SESSION['permission']==3or $_SESSION['permission']==4){ 
                     ?>
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li>
@@ -67,7 +67,7 @@
                     </li>
                    
                               <?php
-                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
+                    if($_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
                         ?>
                         <li>  
                         <a href="validacion.php">
@@ -87,7 +87,7 @@
                             </li>
                         <?php }?>
                              <?php
-                    if($_SESSION['permission']==3 or $_SESSION['permission']==4){
+                    if($_SESSION['permission']==2.5 or $_SESSION['permission']==3 or $_SESSION['permission']==4){
                     ?>
                      <li>
                             <a href="validacion1+1.php">
@@ -158,7 +158,21 @@
                                 <span>Menú</span>
                             </button>
                         </div>
-
+                        <?php if($_SESSION['permission']==4){ ?>
+                           
+                            <div class="col-lg-1" id="sams">
+                                <button type="button"  onclick="location.href='search.php'" id="sidebarCollapse" id="makota" class="btn btn-sam animated tada navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Reportes</span>
+                            </button>
+                            </div>
+                            <div class="col-lg-4" id="sams">
+                                <button type="button" onclick="location.href='e_usuarios.php'" id="sidebarCollapse" id="makota" class="btn btn-sam animated tada navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Editar Usuarios</span>
+                            </button>
+                            </div>
+                            <?php } ?>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <button class="nav navbar-nav navbar-right  makotasamuel">
                                 <li><a href="#"><?php require_once('includes/name.php');?></a></li>
@@ -168,11 +182,14 @@
                     </div>
                 </nav>
               
-                <div class="line"></div>
+                
                 <div class="row">
                 <?php
-             if($_SESSION['permission']==1or $_SESSION['permission']==2 or $_SESSION['permission']==3 ){
+             if($_SESSION['permission']==1or $_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 ){
                     ?>
+                    <div class="col-md-12">
+    <div class="panel panel-default sammacmedia">
+            <div class="panel-heading">Mis objetivos</div></div>
                 <div class="col-lg-3 col-md-4 ">
                     <a href="check.php"><div class="panel panel strover sammacmedia">
                         <div class="panel-heading">
@@ -238,7 +255,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-clock-o fa-5x"></i>
+                                    <i class="fa fa-user fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php  echo " <h3>$hcp</h3>";?></div>
@@ -256,8 +273,8 @@
                                     <i class="fa  fa-list fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><?php  echo " <h3> $ap</h3>";?></div>
-                    <div><h5> COMPETENCIAS PENDIENTES </5></div></a>
+                                    <div class="huge"><?php  echo " <h3> $hcp0</h3>";?></div>
+                    <div><h5> COMP. PENDIENTES </5></div></a>
                                 </div>
                             </div>
                         </div>
@@ -266,8 +283,12 @@
                 
                 <?php }?>
                              <?php
-                    if(  $_SESSION['permission']==2 ){
+                    if(  $_SESSION['permission']==2  ){
                     ?>
+                    <div class="col-md-12">
+    <div class="panel panel-default sammacmedia">
+            <div class="panel-heading"> Objetivos de reportes
+            </div></div></div>
                    <a href="validacion.php">  <div class="col-lg-3 col-md-4 ">
                     <div class="panel panel sammac2 sammacmedia">
                         <div class="panel-heading">
@@ -277,7 +298,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php  echo " <h3> $ppv</h3>";?></div>
-                                    <div><h5> PENDIENTES DE VALIDAR</h5></div></a>
+                                    <div><h5> OBJETIVOS POR VALIDAR</h5></div></a>
                                 </div>
                             </div>
                         </div>
@@ -292,7 +313,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php   echo " <h3> $ppe</h3>";?></div>
-                                    <div><h5> PENDIENTES DE EVALUAR </h5></div></a>
+                                    <div><h5> OBJETIVOS POR EVALUAR </h5></div></a>
                                 </div>
                             </div>
                         </div>
@@ -310,7 +331,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php  echo " <h3>$hcp1</h3>";?></div>
-                                    <div><h5> COMPETENCIAS PENDIENTES DE VALIDAR</h5></div></a>
+                                    <div><h5> COMPETENCIAS POR VALIDAR</h5></div></a>
                                 </div>
                             </div>
                         </div>
@@ -318,9 +339,13 @@
                 </div>
                 <?php }?>
                     <?php
-                    if($_SESSION['permission']==3 ){
+                    if($_SESSION['permission']==3 or $_SESSION['permission']==2.5){
                     ?>
-                    <a href="validacion1+1.php">  <div class="col-lg-3 col-md-4 ">
+                    <div class="col-md-12">
+    <div class="panel panel-default sammacmedia">
+            <div class="panel-heading"> Objetivos de reportes
+            </div></div></div>
+                    <a href="validacion.php">  <div class="col-lg-3 col-md-4 ">
                     <div class="panel panel sammac2 sammacmedia">
                         <div class="panel-heading">
                             <div class="row">
@@ -329,7 +354,37 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php  echo " <h3> $ppv1</h3>";?></div>
-                                    <div><h5> PENDIENTES DE VALIDAR</h5></div></a>
+                                    <div><h5> OBJETIVOS REPORTES DIRECTOS POR VALIDAR    </h5></div></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="validacion1+1.php">  <div class="col-lg-3 col-md-4 ">
+                    <div class="panel panel sammac2 sammacmedia">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-clock-o fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"><?php  echo " <h3> $ppv2</h3>";?></div>
+                                    <div><h5> OBJETIVOS 1+1 POR VALIDAR</h5></div></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="vcompetencias.php">  <div class="col-lg-3 col-md-4 ">
+                    <div class="panel panel sammac1 sammacmedia">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-clock-o fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"><?php  echo " <h3>$hcp2</h3>";?></div>
+                                    <div><h5> COMPETENCIAS POR VALIDAR</h5></div></a>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +399,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge"><?php  echo " <h3>$hcp2</h3>";?></div>
-                                    <div><h5> COMPETENCIAS PENDIENTES DE VALIDAR</h5></div></a>
+                                    <div><h5> COMPETENCIAS 1+1  POR VALIDAR</h5></div></a>
                                 </div>
                             </div>
                         </div>
@@ -385,8 +440,7 @@
                     </div>
                 </div>
                     <?php }?>
-        </div>
-                <div class="line"></div>
+        </div> 
                 <footer>
             <p class="text-center">
             HGZ hailglez@gmail.com &copy;<?php echo date("Y ");?>Copyright. All Rights Reserved.           </p>
@@ -394,9 +448,6 @@
             </div>
             
         </div>
-
-
-
 
 
         <!-- jQuery CDN -->

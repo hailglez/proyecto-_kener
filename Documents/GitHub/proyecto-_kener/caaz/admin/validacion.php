@@ -27,10 +27,10 @@
  
     <body>
     <div class="wrapper">
-            <!-- Sidebar Holder -->
-            <nav id="sidebar" class="sammacmedia">
+             <!-- Sidebar Holder -->
+             <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -40,13 +40,13 @@
                            Inicio</a>
                     </li>
                     <?php
-                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==3
+                    if($_SESSION['permission']==1 or $_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3
                     or $_SESSION['permission']==4){ 
                     ?>
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >
@@ -71,7 +71,7 @@
                     </li>
                    
                               <?php
-                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
+                    if($_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
                         ?>
                         <li class="active">  
                         <a href="validacion.php">
@@ -91,7 +91,7 @@
                             </li>
                         <?php }?>
                              <?php
-                    if($_SESSION['permission']==3 or $_SESSION['permission']==4){
+                    if($_SESSION['permission']==3 or $_SESSION['permission']==2.5 or $_SESSION['permission']==4){
                     ?>
                      <li>
                             <a href="validacion1+1.php">
@@ -206,8 +206,7 @@
       } 
       $link = Conectarse();
       
-      if($_POST)
-      {
+      if($_POST){
          $queryUpdate = "UPDATE $tabla SET notes = '".$_POST['notes']."',
                         estado = '".$_POST['estado']."', severity = '".$_POST['severity']."',
                         justificacionm = '".$_POST['justificacionm']."'
@@ -316,11 +315,13 @@
             <label>Objetivo</label>
               <input type="text" class="form-control" name="notes" value="<?php echo $rowSelectByID['notes'];?>" readonly>
             </div>
+            <?php if($_SESSION['permission']==1  or $_SESSION['permission']==2 or $_SESSION['permission']==2.5) {  
+               ?> 
             <div class="col-lg-2">
-            <label>Enviar objetivo a:</label>
+            <label>Enviar objetivo a:</label><br>
+            <label><input type="radio" name="estado" value="3"required>Validacion 1+1</label><br>
                 <label><input type="radio" name="estado" value="0" required>Revisión</label><br>
-                <label><input type="radio" name="estado" value="2"required>Validacion 1+1</label><br>
-            </div>
+              </div>
             <div class="col-lg-4">
             <label>Justificación</label>
             <textarea class="form-control"name="justificacionm" placeholder=" Describe tu justificación" required></textarea>
@@ -332,7 +333,27 @@
                   <button type="submit" value="Guardar" name="submit" class="btn btn-warning">Aceptar</button>  
                 </div>
                 </div>
-         
+                <?php } ?>  
+                <?php if( $_SESSION['permission']==3){  ?> 
+            <div class="col-lg-2">
+            <label>Enviar objetivo a:</label>
+            <label><input type="radio" name="estado" value="4"required>Evaluacion</label><br>
+                <label><input type="radio" name="estado" value="0" required>Revisión</label><br>                 
+                           
+                           
+              </div>
+            <div class="col-lg-4">
+            <label>Justificación</label>
+            <textarea class="form-control"name="justificacionm" placeholder=" Describe tu justificación" required></textarea>
+            </div>
+                <div class="col-lg-2">
+                <label>Enviar</label>
+                <div class="row form-group">
+                <div class="col-lg-3">
+                  <button type="submit" value="Guardar" name="submit" class="btn btn-warning">Aceptar</button>  
+                </div>
+                </div>
+                <?php } ?>  
       </form> 
       <?php
       }
@@ -341,7 +362,7 @@
       </table>
       <hr>
 </div>
-<?php }?>
+<?php } ?>
 <?php 
 if($_SESSION['permission']==2)
 if($eprow4['activo']==1) 

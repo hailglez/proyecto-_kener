@@ -29,10 +29,10 @@ $eprow=mysqli_fetch_array($sqlE);
  
     <body>
     <div class="wrapper">
-            <!-- Sidebar Holder -->
-            <nav id="sidebar" class="sammacmedia">
+           <!-- Sidebar Holder -->
+           <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -48,7 +48,7 @@ $eprow=mysqli_fetch_array($sqlE);
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >

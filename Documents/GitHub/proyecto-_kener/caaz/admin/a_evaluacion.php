@@ -28,7 +28,7 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -38,13 +38,13 @@
                            Inicio</a>
                     </li>
                     <?php
-                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==3
+                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==2.5 or $_SESSION['permission']==3
                     or $_SESSION['permission']==4){ 
                     ?>
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >
@@ -69,7 +69,7 @@
                     </li>
                    
                               <?php
-                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
+                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==2.5 or $_SESSION['permission']==4 ){
                         ?>
                         <li>  
                         <a href="validacion.php">
@@ -89,7 +89,7 @@
                             </li>
                         <?php }?>
                              <?php
-                    if($_SESSION['permission']==3 or $_SESSION['permission']==4){
+                    if($_SESSION['permission']==3 or $_SESSION['permission']==2.5 or $_SESSION['permission']==4){
                     ?>
                      <li>
                             <a href="validacion1+1.php">
@@ -259,7 +259,7 @@
       if($eprow3['activo']==1) 
       if($eprow3['type']=='Evaluacion Medio Año' )
     
-      if($row['employee_id']== $_SESSION['username'])  if($row['estado']=='3'){
+      if($row['employee_id']== $_SESSION['username'])  if($row['estado']=='4'){
     
         echo "<tr>";
          echo "<td>";
@@ -305,7 +305,7 @@
  
       <form action="a_evaluacion.php" method="post">
          <input type="hidden" value="<?=$rowSelectByID['id'];?>" name="idForm">
-         <input type="hidden" value="4" name="estado">
+         <input type="hidden" value="5" name="estado">
          <div class="row form-group">
          <div class="col-lg-12">
             <label></label>

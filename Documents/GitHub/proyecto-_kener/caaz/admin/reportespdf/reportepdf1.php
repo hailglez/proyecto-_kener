@@ -1,8 +1,9 @@
 <?php
-include 'plantilla1.php';
+require 'plantilla1.php';
 require '../includes/session.php';
 require '../includes/conn.php';
-
+$sqlA =mysqli_query($mysqli,"SELECT * FROM users WHERE username='{$_SESSION['username']}'");
+$epro=mysqli_fetch_array($sqlA);
 //consulta a la base de datos con operaciones aritmeticas.....
 $sqlb = "SELECT * FROM historico WHERE employee_id= '{$_SESSION['username']}'";
 $resultado = $mysqli->query($sqlb);
@@ -12,94 +13,94 @@ $resultado1 = $mysqli->query($sqlb1);
 $trow = $resultado1->fetch_assoc();
 $ty=$trow['fechai']." ". $trow['fechaf']." ". $trow['type'];
 
-$sqlb2 = "SELECT * FROM historico_comp WHERE employee_id= '{$_SESSION['username']}' AND periodo1= '$ty'";
+$sqlb2 = "SELECT * FROM historico_comp WHERE employee_id= '{$_SESSION['username']}'";
 $resultado2 = $mysqli->query($sqlb2);
 
-$sqlb4 = "SELECT AVG(p1) as total1 FROM historico_comp WHERE employee_id='{$_SESSION['username']}' AND periodo1= '$ty' ";
-$resultado4 = $mysqli->query($sqlb4);
-$trow1 = $resultado4->fetch_assoc();
-    
-$sqlb3 = "SELECT SUM(calificacionf*porcentaje/100 ) as total FROM historico WHERE employee_id='{$_SESSION['username']}'";
-$resultado3 = $mysqli->query($sqlb3);
+$sqlb6 = "SELECT * FROM historico_comp WHERE employee_id= '{$_SESSION['username']}'";
+$resultado6 = $mysqli->query($sqlb6);
 
-$sqlb5 = "SELECT SUM(calificacionf*porcentaje/100 ) as total FROM historico WHERE employee_id='{$_SESSION['username']}'";
-$resultado5 = $mysqli->query($sqlb5);
-$trow2 = $resultado5->fetch_assoc();
 
-// apartir de aqui se contruye el PDF
 
-    $pdf = new PDF();
-    $pdf->AliasNbPages();
-    $pdf->AddPage();
+// apartir de aqui se construye el PDF
+$pdf=new PDF_MC_Table();
+$pdf->AddPage();
 
-    $pdf->SetFillColor(232,232,232);
-    $pdf->SetFont('Arial','B',10);
-    $pdf->Cell(15,6,'Nomina',1,0,'C',1);
-    $pdf->Cell(70,6,'Objetivo',1,0,'C',1);
-    $pdf->Cell(30,6,utf8_decode('Autoevaluación'),1,0,'C',1);
-    $pdf->Cell(20,6,utf8_decode('Porcentaje'),1,0,'C',1);
-    $pdf->Cell(20,6,utf8_decode('Medio Año'),1,0,'C',1);
-    $pdf->Cell(15,6,utf8_decode('Final'),1,1,'C',1);
-    
-    
-    $pdf->SetFont('Arial','',10);
+$pdf->SetDrawColor(61,174,233);
+$pdf->Line(10,35,190,35);
+$pdf->SetFillColor(232,232,232);
+$pdf->SetDrawColor(255,255,255);
+$pdf->SetFont('Arial','B',10);
+$pdf->Cell(50,6,utf8_decode('Reporte General'),1,1,'C',1);
+$pdf->Ln();
+// Tabla de datos personales
+$pdf->SetFillColor(232,232,232);
+$pdf->SetDrawColor(40,40,40);
+$pdf->SetFont('Arial','B',10);
+$pdf->Cell(20,6,utf8_decode('Nómina'),1,0,'C',1);
+$pdf->Cell(60,6,utf8_decode('Nombre'),1,0,'C',1);
+$pdf->Cell(60,6,utf8_decode('Puesto'),1,0,'C',1);
+$pdf->Cell(40,6,utf8_decode('Área'),1,1,'C',1);
 
-    while ($row = $resultado->fetch_assoc())
-    {
+// Tabla con 1 filas y 4 columnas
+$pdf->SetWidths(array(20,60,60,40));
+for($i=0;$i<1;$i++)
+	$pdf->Row(array(utf8_decode($epro['username']),
+	utf8_decode($epro['name'].' '. $epro['surname']),
+	utf8_decode($epro['puesto']),utf8_decode($epro['area'])));
+	$pdf->Ln();
 
-        $pdf->Cell(15,6,$row['employee_id'],1,0,'C');
-        $pdf->Cell(70,6,utf8_decode($row['notes']),1,0,'C');
-        $pdf->Cell(30,6,$row['calificaciona'],1,0,'C');
-        $pdf->Cell(20,6,$row['porcentaje'],1,0,'C');
-        $pdf->Cell(20,6,$row['calificacionm'],1,0,'C');
-        $pdf->Cell(15,6,$row['calificacionf'],1,1,'C');
-        
-    }
-while ($row2 = $resultado3->fetch_assoc()){
-    $pdf->Ln();
+ // Tabla de objetivos
+	$pdf->SetFillColor(232,232,232);
+	$pdf->SetFont('Arial','B',10);
+	$pdf->Cell(60,6,'Objetivo',1,0,'C',1);
+	$pdf->Cell(20,6,utf8_decode('Porcentaje'),1,0,'C',1);
+	$pdf->Cell(20,6,utf8_decode('Calificación'),1,0,'C',1);
+	$pdf->Cell(40,6,utf8_decode('Comentarios'),1,0,'C',1);
+	$pdf->Cell(40,6,utf8_decode('Periodo'),1,1,'C',1);
+	$pdf->SetFont('Arial','',10);
+
+$pdf->SetWidths(array(60,20,20,40,40));
+while ($row = $resultado->fetch_assoc()){
+	$pdf->Row(array(utf8_decode($row['notes']),
+	$row['porcentaje'],$row['calificacionf'],
+	$row['justificacionf'], $row['periodo3']));	
 }
+ //Tabla de Competencias
+ $pdf->Ln();
+ $pdf->SetFillColor(232,232,232);
+ $pdf->SetTextColor(0,0,0);
+ $pdf->SetFont('Arial','B',10);
+ $pdf->Cell(60,6,'Competencia',1,0,'C',1);
+ $pdf->Cell(60,6,utf8_decode('Comentario'),1,0,'C',1);
+ $pdf->Cell(20,6,utf8_decode('Calificación'),1,0,'C',1);
+ $pdf->Cell(40,6,utf8_decode('Periodo'),1,1,'C',1);
+ $pdf->SetFont('Arial','',10);
 
+ $pdf->SetWidths(array(60,60,20,40));
+ while ($row3 = $resultado2->fetch_assoc()){
+	$pdf->Row(array(utf8_decode($row3['tipo']),
+	utf8_decode($row3['comp1']),utf8_decode($row3['p1']),
+		$row3['periodo2']));	
+ }
+// Tabla de Fortalezas y oportunidades
+$pdf->Ln();
 $pdf->Ln();
 $pdf->SetFillColor(232,232,232);
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('Arial','B',10);
-$pdf->Cell(15,6,'Nomina',1,0,'C',1);
-$pdf->Cell(65,6,'Competencia',1,0,'C',1);
-$pdf->Cell(70,6,utf8_decode('Comentario'),1,0,'C',1);
-$pdf->Cell(20,6,utf8_decode('calificacion'),1,1,'C',1);
-
+$pdf->Cell(50,6,'Fortalezas',1,0,'C',1);
+$pdf->Cell(50,6,'Oportunidades',1,0,'C',1);
+$pdf->Cell(50,6,utf8_decode('Acciones de desarrollo'),1,0,'C',1);
+$pdf->Cell(30,6,utf8_decode('periodo'),1,1,'C',1);
 $pdf->SetFont('Arial','',10);
 
-while ($row3 = $resultado2->fetch_assoc())
-{
-
-    $pdf->Cell(15,6,$row3['employee_id'],1,0,'C');
-    $pdf->Cell(65,6,utf8_decode($row3['tipo']),1,0,'C');
-    $pdf->Cell(70,6,$row3['comp1'],1,0,'C');
-    $pdf->Cell(20,6,$row3['p1'],1,1,'C');
-
+$pdf->SetWidths(array(50,50,50,30));
+	while($trow3 = $resultado6->fetch_assoc()){
+		if($trow3["fortalezas"] && $trow3["fortalezas"]!=""){
+	$pdf->Row(array(utf8_decode($trow3['fortalezas']),
+	utf8_decode($trow3['oportunidades']),utf8_decode($trow3['conocimientos']),
+	$trow3['periodo2']));	
+ }
 }
-$pdf->Ln();
-$pdf->Ln();
-$pdf->SetFillColor(232,232,232);
-$pdf->SetTextColor(0,0,0);
-$pdf->SetFont('Arial','B',10);
-$pdf->Cell(55,6,'Objetivos',1,0,'C',1);
-$pdf->Cell(55,6,'Competencias',1,0,'C',1);
-$pdf->Cell(55,6,utf8_decode('calificacion General'),1,1,'C',1);
-
-$pdf->SetFont('Arial','',10);
-$a=$trow2['total'];
-$b=$trow1['total1'];
-$aa=$a*60/100;
-$bb=$b*40/100;
-$full=$aa+$bb;
-    $pdf->Cell(55,6,$aa,1,0,'C');
-    $pdf->Cell(55,6, bcdiv($bb, '1', 2),1,0,'C');
-    $pdf->Cell(55,6, bcdiv($full, '1', 2),1,1,'C');
-
-    $pdf->output();
-
-
-
+$pdf->Output();
 ?>

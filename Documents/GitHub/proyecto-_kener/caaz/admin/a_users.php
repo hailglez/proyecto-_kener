@@ -19,10 +19,10 @@
     </head>
     <body>
     <div class="wrapper">
-            <!-- Sidebar Holder -->
-            <nav id="sidebar" class="sammacmedia">
+             <!-- Sidebar Holder -->
+             <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -38,7 +38,7 @@
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >
@@ -273,9 +273,10 @@
             <label>Nivel de acceso</label>
               <select class="form-control" name="permission">
               <option>1</option>
-              <option>2</option> 
-             <option>3</option> 
-             <option>4</option> 
+              <option>2</option>
+              <option>2.5</option>  
+              <option>3</option> 
+              <option>4</option> 
               </select>
             </div>  
              <div class="col-lg-6">

@@ -38,12 +38,16 @@ $trow2 = $resultado5->fetch_assoc();
     $pdf->AliasNbPages();
     $pdf->AddPage();
 
+    $pdf->SetDrawColor(61,174,233);
+    $pdf->Line(10,35,190,35);
     $pdf->SetFillColor(232,232,232);
+    $pdf->SetDrawColor(255,255,255);
     $pdf->SetFont('Arial','B',10);
     $pdf->Cell(50,6,utf8_decode($trow['type']),1,1,'C',1);
     $pdf->Ln();
 // Tabla de datos personales
     $pdf->SetFillColor(232,232,232);
+    $pdf->SetDrawColor(40,40,40);
     $pdf->SetFont('Arial','B',10);
     $pdf->Cell(20,6,utf8_decode('Nómina'),1,0,'C',1);
     $pdf->Cell(60,6,utf8_decode('Nombre'),1,0,'C',1);
@@ -51,10 +55,10 @@ $trow2 = $resultado5->fetch_assoc();
     $pdf->Cell(40,6,utf8_decode('Área'),1,1,'C',1);
 
     $pdf->SetFont('Arial','',10);
-        $pdf->Cell(20,8,$epro['username'],1,0,'C');
-        $pdf->Cell(60,8,$epro['name'].' '. $epro['surname'],1,0,'C');
-        $pdf->Cell(60,8,$epro['puesto'],1,0,'C');
-        $pdf->Cell(40,8,$epro['area'],1,1,'C');
+        $pdf->Cell(20,8,utf8_decode($epro['username']),1,0,'C');
+        $pdf->Cell(60,8,utf8_decode($epro['name'].' '. $epro['surname']),1,0,'C');
+        $pdf->Cell(60,8,utf8_decode($epro['puesto']),1,0,'C');
+        $pdf->Cell(40,8,utf8_decode($epro['area']),1,1,'C');
         $pdf->Ln();
     // Tabla de objetivos
     $pdf->SetFillColor(232,232,232);
@@ -72,7 +76,6 @@ $trow2 = $resultado5->fetch_assoc();
 
         $pdf->Cell(120,8,utf8_decode($row['notes']),1,0,'C');
         $pdf->Cell(20,8,$row['porcentaje'],1,0,'C');
-
         $pdf->Cell(40,8,$row['calificacionf'],1,1,'C');
         
     }
@@ -99,8 +102,7 @@ while ($row3 = $resultado2->fetch_assoc())
     $pdf->Cell(25,6,$row3['p1'],1,1,'C');
 }
 // Tabla de Calificacion
-$pdf->Ln();
-$pdf->Ln();
+$pdf->Ln(2);
 $pdf->SetFillColor(232,232,232);
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('Arial','B',10);

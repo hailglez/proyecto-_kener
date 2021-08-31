@@ -24,7 +24,7 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -40,7 +40,7 @@
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >
@@ -177,7 +177,6 @@
                 <thead>
                 <tr>
                     <th>No</th>
-                     <th> Id </th>
                     <th> Colaborador</th>
                     <th> Objetivo </th>
                     <th> AutoEvaluacion </th>
@@ -195,7 +194,6 @@
                     
                             <td ><?php echo $n; ?></td>
                      
-                            <td ><?php echo $row["case_num"]; ?></td>
                             <td ><?php echo $row["name"]; 
                             echo'<br>'; echo $row["surname"];echo'<br>'; echo $row["employee_id"]; ?> || <a href="#samstrover<?php echo $row['employee_id']; ?>" data-toggle="modal" class="btn btn-warning"><span class="fa fa-pencil"></span> Ver</a> </td>
                             <td ><?php echo $row["notes"]; ?></td>
@@ -226,7 +224,8 @@
                       if (isset($_GET['idx']) && is_numeric($_GET['idx']))
                       {
                           $id = $_GET['idx'];
-                          if ($stmt = $mysqli->prepare("DELETE FROM cases WHERE id = ? LIMIT 1"))
+                          if ($stmt = $mysqli->prepare("DELETE cases,historico FORM cases 
+                          JOIN historico ON cases.case_num = historico.case_num WHERE cases.id = '".$id."' "))
                           {
                               $stmt->bind_param("i",$id);
                               $stmt->execute();

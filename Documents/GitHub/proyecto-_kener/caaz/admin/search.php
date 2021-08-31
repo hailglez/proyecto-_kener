@@ -67,7 +67,20 @@ $resultado2 = $mysqli->query($sqlb2);
                                 <span>Menú</span>
                             </button>
                         </div>
-
+                        <?php if($_SESSION['permission']==4){ ?>
+                            <div class="col-lg-2" id="sams">
+                                <button type="button"  onclick="location.href='e_usuarios.php'" id="sidebarCollapse" id="makota" class="btn btn-sam animated tada navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Editar Usuarios</span>
+                            </button>
+                            </div>
+                            <div class="col-lg-1" id="sams">
+                                <button type="button" onclick="location.href='search.php'" id="sidebarCollapse" id="makota" class="btn btn-sam animated tada navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Reportes</span>
+                            </button>
+                            </div>
+                            <?php } ?>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <button class="nav navbar-nav navbar-right  makotasamuel">
                                 <li><a href="#"><?php require_once('includes/name.php');?></a></li>

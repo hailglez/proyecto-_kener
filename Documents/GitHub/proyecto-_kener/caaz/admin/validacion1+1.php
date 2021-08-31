@@ -29,7 +29,7 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -39,13 +39,13 @@
                            Inicio</a>
                     </li>
                     <?php
-                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==3
+                    if($_SESSION['permission']==1 or $_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3
                     or $_SESSION['permission']==4){ 
                     ?>
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >
@@ -70,7 +70,7 @@
                     </li>
                    
                               <?php
-                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
+                    if($_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
                         ?>
                         <li>  
                         <a href="validacion.php">
@@ -90,7 +90,7 @@
                             </li>
                         <?php }?>
                              <?php
-                    if($_SESSION['permission']==3 or $_SESSION['permission']==4){
+                    if($_SESSION['permission']==3or $_SESSION['permission']==2.5 or $_SESSION['permission']==4){
                     ?>
                      <li class="active">
                             <a href="validacion1+1.php">
@@ -171,7 +171,174 @@
                     </div>
                 </nav>
                 <?php   
-        if($eprow3['activo']==1)  if($eprow3['type']=='Establecimiento de Objetivos'){
+        if($eprow3['activo']==1)  if($eprow3['type']=='Establecimiento de Objetivos')
+        if($_SESSION['permission']==1  or $_SESSION['permission']==2){
+        ?>   
+      <?php
+      // Dirección o IP del servidor MySQL
+      $host = "localhost";
+      // Puerto del servidor MySQL
+      $puerto = "3306";
+      // Nombre de usuario del servidor MySQL
+      $usuario = "root";
+      // Contraseña del usuario
+      $contrasena = "Soporte01";
+      // Nombre de la base de datos
+      $baseDeDatos ="caaz";
+      // Nombre de la tabla a trabajar
+      $tabla = "cases";
+ 
+      function Conectarse()
+      {
+         global $host, $puerto, $usuario, $contrasena, $baseDeDatos, $tabla;
+ 
+         if (!($link = mysqli_connect($host.":".$puerto, $usuario, $contrasena))) 
+         { 
+            echo "Error conectando a la base de datos.<br>"; 
+            exit(); 
+            }
+         if (!mysqli_select_db($link, $baseDeDatos)) 
+         { 
+            echo "Error seleccionando la base de datos.<br>"; 
+            exit(); 
+         } 
+      return $link; 
+      } 
+      $link = Conectarse();
+      
+      if($_POST)
+      {
+         $queryUpdate = "UPDATE $tabla SET notes = '".$_POST['notes']."',
+                        estado = '".$_POST['estado']."', severity = '".$_POST['severity']."',
+                        justificacionm = '".$_POST['justificacionm']."'
+                        WHERE id = ".$_POST['idForm'].";";
+         $resultUpdate = mysqli_query($link, $queryUpdate); 
+         if($resultUpdate)
+         {
+            ?>
+            <div class="alert alert-warning sammac animated shake" id="sams1">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong> ¡Listo! </strong><?php echo"<strong>La evaluación se envió correctamente.</strong>";?></div>
+            <?php
+           
+         }
+         else
+         {
+            echo "No se pudo actualizar el registro. <br>";
+         }
+      }
+     
+      ?>
+<?php
+
+      $sqlb = "SELECT users.name, cases.employee_id, cases.id id,case_num, surname,puesto,notes,severity, calificaciona, justificacion,
+      porcentaje,medida1,medida2,medida3,medida4,medida5,eva1,eva2,estado,justificacionm 
+      FROM users INNER JOIN $tabla ON users.username=cases.employee_id ";
+      $resultado3 = mysqli_query($mysqli, $sqlb);
+
+?>
+<div class="panel panel-default sammacmedia">
+            <div class="panel-heading">Objetivos de Reportes Establecimiento</div>
+            <div class="panel-body">
+ <table class="table table-striped thead-dark table-bordered table-hover" >
+    <thead>
+         <tr>
+            <td>Colaboradores</td>
+            <td>Objetivo</td>
+            <td>%</td>
+            <td>Métrica</td>
+            <td>Comentario del jefe</td>
+            <td>Validar</td>
+         <tr>
+    </thead>
+    </div>
+      <?php
+      
+      while($eprow2 = mysqli_fetch_array($resultado3))
+      if( $_SESSION['username']== $eprow2['eva1'] or $eprow2['eva2']) if($eprow2['estado']=='2') {
+    
+        echo "<tr>";
+         echo "<td>";
+         echo $eprow2["employee_id"];echo "<br>";
+         echo $eprow2[ "name"];echo "  ";echo $eprow2[ "surname"];echo "<br>";echo $eprow2["puesto"];
+         echo "<td>";
+         echo $eprow2["notes"];
+         echo "<td>";
+         echo $eprow2["porcentaje"];
+         echo "<td>";
+         echo "1.- ";
+         echo $eprow2[ "medida1"];echo "<br>";
+         echo "2.- ";
+         echo $eprow2["medida2"];echo "<br>"; 
+         echo "3.- ";
+         echo $eprow2["medida3"];echo "<br>";
+         echo "4.- ";
+         echo $eprow2["medida4"];echo "<br>";
+         echo "5.- ";
+         echo $eprow2["medida5"];
+         echo "<td>";
+         echo $eprow2["justificacionm"];
+         echo "<td>";
+         echo "<button><b><a href=\"?id=".$eprow2["id"]."\">Validar</a></b></button>";
+         echo "</td>";
+         echo "</tr>";
+      } 
+    ?>
+ <?php
+      if($_GET) 
+      if($eprow3['activo']==1) 
+      if($eprow3['type']=='Establecimiento de Objetivos')
+      {
+         $querySelectByID = "SELECT id, case_num, notes, employee_id, severity FROM $tabla WHERE id = ".$_GET['id'].";";
+         $resultSelectByID = mysqli_query($link, $querySelectByID); 
+         $rowSelectByID = mysqli_fetch_array($resultSelectByID);
+
+         $querySelectByID2 = "SELECT * FROM users WHERE username = ".$rowSelectByID['employee_id'].";";
+         $resultSelectByID2 = mysqli_query($link, $querySelectByID2); 
+         $rowSelectByID2 = mysqli_fetch_array($resultSelectByID2);
+      ?>
+ 
+      <form action="validacion1+1.php" method="post">
+         <input type="hidden" value="<?=$rowSelectByID['id'];?>" name="idForm">
+         <input type="hidden" value="En Proceso" name="severity">
+         <div class="row form-group">
+         <div class="col-lg-2">
+            <label>Colaborador</label>
+              <input type="text" class="form-control"  value="<?php echo $rowSelectByID2['name'];?>" readonly>
+            </div>
+          <div class="col-lg-2">
+            <label>Objetivo</label>
+              <input type="text" class="form-control" name="notes" value="<?php echo $rowSelectByID['notes'];?>" readonly>
+            </div>
+            <div class="col-lg-2">
+            <label>Enviar objetivo a:</label><br>
+                <label><input type="radio" name="estado" value="4">Evaluación</label><br>
+                <label><input type="radio" name="estado" value="0">Revisión</label><br>
+            </div>
+            <div class="col-lg-4">
+            <label>Justificación</label>
+            <textarea class="form-control"name="justificacionm" placeholder=" Describe tu justificación" required></textarea>
+            </div>
+                <div class="col-lg-2">
+                <label>Enviar</label>
+                <div class="row form-group">
+                <div class="col-lg-3">
+                  <button type="submit" value="Guardar" name="submit" class="btn btn-warning">Aceptar</button>  
+                </div>
+                </div>
+         
+      </form> 
+      <?php
+      }
+      mysqli_close($link);
+      ?>
+      </table>
+      <hr>
+</div>
+<?php }?>
+<?php   
+        if($eprow3['activo']==1)  if($eprow3['type']=='Establecimiento de Objetivos')
+        if($_SESSION['permission']==3 or $_SESSION['permission']==2.5){
         ?>   
       <?php
       // Dirección o IP del servidor MySQL
@@ -253,7 +420,8 @@
     </div>
       <?php
       while($eprow2 = mysqli_fetch_array($resultado3))
-      if( $_SESSION['username']== $eprow2['eva1'] or $eprow2['eva2']) if($eprow2['estado']=='2') {
+      if(  $_SESSION['username']== $eprow2['eva2']) 
+      if($eprow2['estado']=='3') {
     
         echo "<tr>";
          echo "<td>";
@@ -309,9 +477,9 @@
               <input type="text" class="form-control" name="notes" value="<?php echo $rowSelectByID['notes'];?>" readonly>
             </div>
             <div class="col-lg-2">
-            <label>Enviar objetivo a:</label>
+            <label>Enviar objetivo a:</label><br>
+                <label><input type="radio" name="estado" value="4">Evaluación</label><br>
                 <label><input type="radio" name="estado" value="0">Revisión</label><br>
-                <label><input type="radio" name="estado" value="3">Evaluación</label><br>
             </div>
             <div class="col-lg-4">
             <label>Justificación</label>
@@ -492,10 +660,10 @@ if($eprow4['type']=='Evaluacion Final')
             if ($rowSelectByID['estado']=='7'){ 
             ?>
             <div class="col-lg-2">
-            <label>Enviar objetivo a:</label>
+            <label>Enviar objetivo a:</label><br>
             <input type="hidden" value="n/a" name="justificacionf">
+            <label><input type="radio" name="estado" value="8" required>Evaluación</label><br>
                 <label><input type="radio" name="estado" value="5" required>Revisión</label><br>
-                <label><input type="radio" name="estado" value="8" required>Evaluación</label><br>
             </div>
             <div class="col-lg-4">
             <label>Justificación</label>
@@ -544,11 +712,7 @@ if($eprow4['type']=='Evaluacion Final')
          <script src="assets/js/jquery-1.10.2.js"></script>
          <!-- Bootstrap Js CDN -->
          <script src="assets/js/bootstrap.min.js"></script>
-         <script type="text/javascript">
-            if (window.history.replaceState) { // verificamos disponibilidad
-            window.history.replaceState(null, null, window.location.href);
-            }
-        </script>
+         
          <script type="text/javascript">
              $(document).ready(function () {
                  $('#sidebarCollapse').on('click', function () {

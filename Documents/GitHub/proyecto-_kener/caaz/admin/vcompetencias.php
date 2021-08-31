@@ -30,7 +30,7 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -40,13 +40,13 @@
                            Inicio</a>
                     </li>
                     <?php
-                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==3
+                    if($_SESSION['permission']==1 or $_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3
                     or $_SESSION['permission']==4){ 
                     ?>
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >
@@ -71,7 +71,7 @@
                     </li>
                    
                               <?php
-                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
+                    if($_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
                         ?>
                         <li>  
                         <a href="validacion.php">
@@ -91,7 +91,7 @@
                             </li>
                         <?php }?>
                              <?php
-                    if($_SESSION['permission']==3 or $_SESSION['permission']==4){
+                    if($_SESSION['permission']==3 or $_SESSION['permission']==2.5 or $_SESSION['permission']==4){
                     ?>
                      <li>
                             <a href="validacion1+1.php">
@@ -642,7 +642,7 @@ if($eprow4['type']=='Evaluacion Final'){
       if($_GET)
       {
          
-         $querySelectByID = "SELECT id,comp1,p1,employee_id,tipo FROM $tabla WHERE id = ".$_GET['id'].";";
+         $querySelectByID = "SELECT id,comp1,p1,employee_id,tipo,fortalezas,oportunidades FROM $tabla WHERE id = ".$_GET['id'].";";
          $resultSelectByID = mysqli_query($link, $querySelectByID); 
          $rowSelectByID = mysqli_fetch_array($resultSelectByID);
 
@@ -661,38 +661,28 @@ if($eprow4['type']=='Evaluacion Final'){
               <input type="text" class="form-control" name="tipo" value="<?php echo $rowSelectByID['tipo'];?>" readonly>
             </div>
             <div class="col-lg-2">
-            <label  class="sammac6">Competencia:</label><br>
+            <label>Competencia:</label><br>
                 <label><input type="radio" name="estado" value="0" required> Regresar  </label><br>
                 <label><input type="radio" name="estado" value="5" required>Aceptar</label><br>
                 </div>
-                <div class="col-lg-2">
-            <label  class="sammac6">Justificación</label><br>
-         
+                <div class="col-lg-3">
+            <label>Justificación</label><br>
             <textarea class="form-control"name="c_evaluador" placeholder=" Describe tu justificación" maxlength="250" required></textarea>
             </div> 
                    <?php
-                    if($rowSelectByID['tipo']== 'Trabajo en equipo' or
-                    $rowSelectByID['tipo']== 'Desarrollo de personal y de talento'){
+                    if($rowSelectByID['tipo']== 'Trabajo en equipo'){
                     ?>      
-            <div class="col-lg-2">
-            <label  class="sammac6">Comentar Fortalezas</label><br>
-     
-            <textarea class="form-control"name="fortalezas" placeholder=" Describe tu justificación"maxlength="250" ></textarea>
-            </div>
             <div class="col-lg-3">
-            <label  class="sammac6">Comentar Oportunidades</label><br>
-       
-            <textarea class="form-control"name="oportunidades" placeholder=" Describe tu justificación" maxlength="250"></textarea>
-            </div>
-            <div class="col-lg-2">
-              <br>
-                <label class="sammac6">¿Agregar acciones de desarrollo?</label><br>
-            <label><input type="radio" name="opc" value="1" onchange="mostrar(this.value);" required>SI</label><br>
-            <label><input type="radio" name="opc" value="2" onchange="mostrar(this.value);" required>NO</label><br>
-            </div>
-            <div class="col-lg-3" id="nombre" style="display:none;" >
-                 <label  class="sammac6" for="">Comentar Acciones</label>
-             <textarea type="text" class="form-control" name="conocimientos" placeholder=" Describe tu justificación" maxlength="250"></textarea>
+            <label >Fortalezas</label><br>
+            <input  type="text" class="form-control" name="fortalezas" value="<?php echo $rowSelectByID['fortalezas'];?>" readonly >
+            <label >Oportunidades</label><br>
+            <input type="text" class="form-control" name="oportunidades" value="<?php echo $rowSelectByID['oportunidades'];?>" readonly>
+            <br></div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-7" id="nombre"  >
+                 <label >Acciones de desarrollo</label>
+             <textarea type="text" class="form-control" name="conocimientos" 
+             placeholder=" Describe las acciones de desarrollo para el colaborador" maxlength="250" required></textarea>
             </div>
             <?php }?>
                 <div class="col-lg-1">
@@ -846,7 +836,7 @@ if($eprow4['type']=='Evaluacion Final'){
       if($_GET)
       {
          
-         $querySelectByID = "SELECT id,comp1,p1,employee_id,tipo FROM $tabla WHERE id = ".$_GET['id'].";";
+         $querySelectByID = "SELECT id,comp1,p1,employee_id,tipo,fortalezas,oportunidades FROM $tabla WHERE id = ".$_GET['id'].";";
          $resultSelectByID = mysqli_query($link, $querySelectByID); 
          $rowSelectByID = mysqli_fetch_array($resultSelectByID);
 
@@ -877,23 +867,17 @@ if($eprow4['type']=='Evaluacion Final'){
             <?php
                     if( $rowSelectByID['tipo']== 'Desarrollo de personal y de talento'){
                     ?>      
-            <div class="col-lg-2">
-            <label  class="sammac6">Comentar Fortalezas</label>
-            <textarea class="form-control"name="fortalezas" placeholder=" Describe tu justificación"maxlength="250" ></textarea>
-            </div>
-            <div class="col-lg-2">
-            <label  class="sammac6">Comentar Oportunidades</label>
-            <textarea class="form-control"name="oportunidades" placeholder=" Describe tu justificación"maxlength="250"></textarea>
-            </div>
-            <div class="col-lg-4">
-              <br>
-                <label class="sammac6">¿Agregar acciones de desarrollo?</label><br>
-            <label><input type="radio" name="opc" value="1" onchange="mostrar(this.value);" required>SI</label><br>
-            <label><input type="radio" name="opc" value="2" onchange="mostrar(this.value);" required>NO</label><br>
-            </div>
-            <div class="col-lg-3" id="nombre" style="display:none;" >
-                 <label  class="sammac6" for="">Comentar Acciones</label>
-             <textarea type="text" class="form-control" name="conocimientos" maxlength="250"></textarea>
+            <div class="col-lg-3">
+            <label >Fortalezas</label><br>
+            <input  type="text" class="form-control" name="fortalezas" value="<?php echo $rowSelectByID['fortalezas'];?>" readonly >
+            <label >Oportunidades</label><br>
+            <input type="text" class="form-control" name="oportunidades" value="<?php echo $rowSelectByID['oportunidades'];?>" readonly>
+            <br></div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-7" id="nombre"  >
+                 <label >Acciones de desarrollo</label>
+             <textarea type="text" class="form-control" name="conocimientos" 
+             placeholder=" Describe las acciones de desarrollo para el colaborador" maxlength="250" required></textarea>
             </div>
             <?php }?>
                 <div class="col-lg-1">

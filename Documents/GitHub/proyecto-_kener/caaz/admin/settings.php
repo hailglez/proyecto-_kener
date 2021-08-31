@@ -20,10 +20,10 @@ $eprow=mysqli_fetch_array($sqlE);
         <link rel="stylesheet" href="assets/css/animate.css">
     </head>
     <div class="wrapper">
-            <!-- Sidebar Holder -->
-            <nav id="sidebar" class="sammacmedia">
+           <!-- Sidebar Holder -->
+           <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -33,13 +33,13 @@ $eprow=mysqli_fetch_array($sqlE);
                            Inicio</a>
                     </li>
                     <?php
-                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==3
+                    if($_SESSION['permission']==1 or $_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3
                     or $_SESSION['permission']==4){ 
                     ?>
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >
@@ -64,7 +64,7 @@ $eprow=mysqli_fetch_array($sqlE);
                     </li>
                    
                               <?php
-                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
+                    if($_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
                         ?>
                         <li>  
                         <a href="validacion.php">
@@ -84,7 +84,7 @@ $eprow=mysqli_fetch_array($sqlE);
                             </li>
                         <?php }?>
                              <?php
-                    if($_SESSION['permission']==3 or $_SESSION['permission']==4){
+                    if($_SESSION['permission']==3 or $_SESSION['permission']==2.5 or $_SESSION['permission']==4){
                     ?>
                      <li>
                             <a href="validacion1+1.php">
@@ -194,7 +194,7 @@ $eprow=mysqli_fetch_array($sqlE);
                                     ?>
                                 <div class="alert alert-warning sammac animated shake" id="sams1">
                           <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong> !Exito! </strong><?php echo'haz cambiado tu contraseña con exito';?></div>
+                        <strong> !Listo! </strong><?php echo'haz cambiado tu contraseña con exito';?></div>
 
                                     <?php
                                 }
@@ -214,7 +214,7 @@ $eprow=mysqli_fetch_array($sqlE);
                         ?>
                         <div class="alert alert-warning sammac animated shake" id="sams1">
                           <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong> ¡Exito! </strong><?php echo'Has actualizado tu perfil con éxito';?></div>
+                        <strong> !Listo! </strong><?php echo'haz actualizado tu perfil con éxito';?></div>
                         <?php
                     }else{
                     ?>
@@ -235,11 +235,11 @@ $eprow=mysqli_fetch_array($sqlE);
         <div class="row form-group">
           <div class="col-lg-6">
             <label>Nombre</label>
-              <input type="text" class="form-control" name="name" pattern="[A-Za-z ]{3,}" value="<?php echo $eprow['name'];?>" required>
+              <input type="text" class="form-control" name="name" pattern="[A-Za-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð, ]{3,}" value="<?php echo $eprow['name'];?>" required>
             </div>  
              <div class="col-lg-6">
             <label>Apellido</label>
-              <input type="text" class="form-control" name="surname" pattern="[A-Za-z ]{3,}" value="<?php echo $eprow['surname'];?>" required>
+              <input type="text" class="form-control" name="surname" pattern="[A-Za-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð, ]{3,}" value="<?php echo $eprow['surname'];?>" required>
             </div>  
         </div>
             <div class="row form-group">
@@ -249,7 +249,7 @@ $eprow=mysqli_fetch_array($sqlE);
             </div>  
              <div class="col-lg-6">
             <label>Telefono</label>
-              <input type="text" class="form-control" name="phone" pattern= "[0-9][ -]*){13,}" value="<?php echo $eprow['phone'];?>" required>
+              <input type="text" class="form-control" name="phone" pattern= "[0-9][ -]*){13,}" value="<?php echo $eprow['phone'];?>">
             </div>  
         </div>   
          <div class="row form-group" >

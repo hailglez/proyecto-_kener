@@ -1,6 +1,6 @@
 <?php
 require 'fpdf/fpdf.php';
-
+date_default_timezone_set('America/Mexico_City');
 class PDF_MC_Table extends FPDF
 {
     function Header()
@@ -10,7 +10,7 @@ class PDF_MC_Table extends FPDF
     $this->SetFont('Arial','B',15);
     $this->SetXY(10,20);
     $this->Cell(30);
-    $this->Cell(120,10, utf8_decode('Reporte Historico'),0,0,'C');
+    $this->Cell(120,10, utf8_decode('Evaluación de desempeño'),0,0,'C');
     $this->SetFont('Arial','B',8);
     $this->Cell(40,10,date('d/m/Y'),0,0,'C');
     $this->Ln(20);

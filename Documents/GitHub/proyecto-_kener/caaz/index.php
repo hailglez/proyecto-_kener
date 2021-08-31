@@ -4,8 +4,9 @@ if(isset($mysqli,$_POST['submit'])){
     $username = mysqli_real_escape_string($mysqli,$_POST['username']);
     $password = mysqli_real_escape_string($mysqli,$_POST['password']);
     $password=md5($password);
-    $query1=mysqli_query($mysqli,"SELECT username,password,type,permission,name,surname FROM users");
-	while($row=mysqli_fetch_array($query1))
+    $query1=mysqli_query($mysqli,"SELECT username,password,type,permission,name,surname FROM users
+	 WHERE username='$username' AND password='$password'");
+	$row=mysqli_fetch_array($query1);
 	{
         $db_name=$row["name"];
 		$db_surname=$row["surname"];
@@ -27,7 +28,14 @@ if(isset($mysqli,$_POST['submit'])){
 				header("Location:admin/dashboard.php");
 			}
 		}
-		
+		else{
+			?>
+	<script type="text/javascript">
+	alert("Usuario o Contraseña incorrecta, verifica tus datos.");
+	window.location.href='index.php';
+	</script>';
+<?php
+		}
 	
     }
 }
@@ -66,10 +74,8 @@ if(isset($mysqli,$_POST['submit'])){
 	<div class="container-login100" style="background-image: url('images/sam.gif');">
 		<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
 			<form class="login100-form validate-form" method="post" action="index.php">
-				<span class="login100-form-title p-b-37">
-				FÓRMULA KENER 
-				</span>
-
+			<img src="admin/assets/image/lg1.png" class="img-thumbnail">
+				<br><br>
 				<div class="wrap-input100 validate-input m-b-20" data-validate="Ingresa tu Número Nómina ">
 					<input class="input100" type="text" name="username" placeholder="Número de Nómina ">
 					<span class="focus-input100"></span>
@@ -86,10 +92,10 @@ if(isset($mysqli,$_POST['submit'])){
 					</button>
 				</div>
 				<br>
-				<br>
+				
 						<a href="admin/forgotPass.php">
-							<label class="login50-form-btn">
-								Restablecer contraseña
+							<label class="login70-form-title p-b-12">
+								<b>Restablecer contraseña</b>
 							</label>
 						</a>
 					</div>

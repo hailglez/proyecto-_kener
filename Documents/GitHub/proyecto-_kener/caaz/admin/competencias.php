@@ -34,7 +34,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
             <!-- Sidebar Holder -->
             <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -44,13 +44,13 @@ $eprow4=mysqli_fetch_array($sqlE4);
                            Inicio</a>
                     </li>
                     <?php
-                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==3
+                    if($_SESSION['permission']==1 or $_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 
                     or $_SESSION['permission']==4){ 
                     ?>
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li  class="active">
@@ -75,7 +75,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
                     </li>
                    
                               <?php
-                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
+                    if($_SESSION['permission']==2or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
                         ?>
                         <li>  
                         <a href="validacion.php">
@@ -95,7 +95,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
                             </li>
                         <?php }?>
                              <?php
-                    if($_SESSION['permission']==3 or $_SESSION['permission']==4){
+                    if($_SESSION['permission']==3 or $_SESSION['permission']==2.5 or $_SESSION['permission']==4){
                     ?>
                      <li>
                             <a href="validacion1+1.php">
@@ -257,7 +257,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
                                     $resTa2 = mysqli_query($mysqli,$sqlTa2);
                                 }
 
-                                if($resTaru2 or $resTa2 ==1){
+                                if($resTaru2==1 or $resTa2 ==1){
                                     ?>
                                     <div class="alert alert-warning sammac animated shake" id="sams1">
                                       <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -364,7 +364,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
             </div>
             </div>
                     <?php
-                     if($_SESSION['permission']==2 or $_SESSION['permission']==3  or $_SESSION['permission']==4 ){
+                     if($_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3  or $_SESSION['permission']==4 ){
                     ?>
                      <div class="col-lg-10">
             <br>
@@ -428,6 +428,8 @@ $eprow4=mysqli_fetch_array($sqlE4);
                         $p4 = mysqli_real_escape_string($mysqli,$_POST['p4']);
                         $comp5 = mysqli_real_escape_string($mysqli,$_POST['comp5']);
                         $p5 = mysqli_real_escape_string($mysqli,$_POST['p5']);
+                        $fortalezas = mysqli_real_escape_string($mysqli,$_POST['fortalezas']);
+                        $oportunidades = mysqli_real_escape_string($mysqli,$_POST['oportunidades']);
                         if($_SESSION['permission']==2 or $_SESSION['permission']==3){
                         $comp6 = mysqli_real_escape_string($mysqli,$_POST['comp6']);
                         $p6 = mysqli_real_escape_string($mysqli,$_POST['p6']);
@@ -467,39 +469,38 @@ $eprow4=mysqli_fetch_array($sqlE4);
                              
                           }else{
                            
-                            $sqlTaru = "INSERT INTO competencias(employee_id,comp1,p1,estado,periodo2,tipo,case_num,c_evaluado)
-                            VALUES('$employee_id','$comp1','$p1','$estado','$periodo2','$t1','$case_num1','$c_evaluado'),
-                                  ('$employee_id','$comp2','$p2','$estado','$periodo2','$t2','$case_num2','$c_evaluado'),
-                                  ('$employee_id','$comp3','$p3','$estado','$periodo2','$t3','$case_num3','$c_evaluado'),
-                                  ('$employee_id','$comp4','$p4','$estado','$periodo2','$t4','$case_num4','$c_evaluado'),
-                                  ('$employee_id','$comp5','$p5','$estado','$periodo2','$t5','$case_num5','$c_evaluado')";
+                            $sqlTaru = "INSERT INTO competencias(employee_id,comp1,p1,estado,periodo2,tipo,case_num,c_evaluado,fortalezas,oportunidades)
+                            VALUES('$employee_id','$comp1','$p1','$estado','$periodo2','$t1','$case_num1','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp2','$p2','$estado','$periodo2','$t2','$case_num2','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp3','$p3','$estado','$periodo2','$t3','$case_num3','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp4','$p4','$estado','$periodo2','$t4','$case_num4','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp5','$p5','$estado','$periodo2','$t5','$case_num5','$c_evaluado','$fortalezas','$oportunidades')";
                             $resTaru = mysqli_query($mysqli,$sqlTaru);
-                            $sqlTaru2 = "INSERT INTO historico_comp(employee_id,comp1,p1,estado,periodo2,tipo,case_num,c_evaluado)
-                            VALUES('$employee_id','$comp1','$p1','$estado','$periodo2','$t1','$case_num1','$c_evaluado'),
-                                  ('$employee_id','$comp2','$p2','$estado','$periodo2','$t2','$case_num2','$c_evaluado'),
-                                  ('$employee_id','$comp3','$p3','$estado','$periodo2','$t3','$case_num3','$c_evaluado'),
-                                  ('$employee_id','$comp4','$p4','$estado','$periodo2','$t4','$case_num4','$c_evaluado'),
-                                  ('$employee_id','$comp5','$p5','$estado','$periodo2','$t5','$case_num5','$c_evaluado')";
+                            $sqlTaru2 = "INSERT INTO historico_comp(employee_id,comp1,p1,estado,periodo2,tipo,case_num,c_evaluado,fortalezas,oportunidades)
+                            VALUES('$employee_id','$comp1','$p1','$estado','$periodo2','$t1','$case_num1','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp2','$p2','$estado','$periodo2','$t2','$case_num2','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp3','$p3','$estado','$periodo2','$t3','$case_num3','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp4','$p4','$estado','$periodo2','$t4','$case_num4','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp5','$p5','$estado','$periodo2','$t5','$case_num5','$c_evaluado','$fortalezas','$oportunidades')";
                             $resTaru2 = mysqli_query($mysqli,$sqlTaru2); 
                             
                             if($_SESSION['permission']==2 or $_SESSION['permission']==3){
-                                $sqlTa = "INSERT INTO competencias(employee_id,comp1,p1,estado,periodo2,tipo,case_num,c_evaluado)
-                                VALUES ('$employee_id','$comp6','$p6','$estado','$periodo2','$t6','$case_num6','$c_evaluado'),
-                                  ('$employee_id','$comp7','$p7','$estado','$periodo2','$t7','$case_num7','$c_evaluado')";
+                                $sqlTa = "INSERT INTO competencias(employee_id,comp1,p1,estado,periodo2,tipo,case_num,c_evaluado,fortalezas,oportunidades)
+                                VALUES ('$employee_id','$comp6','$p6','$estado','$periodo2','$t6','$case_num6','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp7','$p7','$estado','$periodo2','$t7','$case_num7','$c_evaluado','$fortalezas','$oportunidades')";
                                 $resTa = mysqli_query($mysqli,$sqlTa);
-                                $sqlTa2 = "INSERT INTO historico_comp(employee_id,comp1,p1,estado,periodo2,tipo,case_num,c_evaluado)
-                                VALUES ('$employee_id','$comp6','$p6','$estado','$periodo2','$t6','$case_num6','$c_evaluado'),
-                                  ('$employee_id','$comp7','$p7','$estado','$periodo2','$t7','$case_num7','$c_evaluado')";
+                                $sqlTa2 = "INSERT INTO historico_comp(employee_id,comp1,p1,estado,periodo2,tipo,case_num,c_evaluado,fortalezas,oportunidades)
+                                VALUES ('$employee_id','$comp6','$p6','$estado','$periodo2','$t6','$case_num6','$c_evaluado',' ',' '),
+                                  ('$employee_id','$comp7','$p7','$estado','$periodo2','$t7','$case_num7','$c_evaluado','$fortalezas','$oportunidades')";
                                 $resTa2 = mysqli_query($mysqli,$sqlTa2);
-                                    
-                            if($resTaru2==1 or $resTa2 ==1){
+                            }
+                            if($resTaru2 ==1){
                                 ?>
-                                <div class="alert alert-warning sammac animated shake" id="sams1">
-                                  <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                <strong> ¡Listo! </strong><?php echo'has envido tus competencias a validacion con exito';?></div>
-                                <?php
+                                    <div class="alert alert-warning sammac animated shake" id="sams1">
+                                      <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                    <strong> ¡Listo! </strong><?php echo'Has enviado tus competencias con éxito';?></div>
+                                    <?php
                             } 
-                        } 
                     } 
                 }
             }?>
@@ -531,7 +532,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
         <textarea class="form-control" name="comp1" placeholder="Justifica aqui tu puntuación" required></textarea>
         </div>
         <div class="col-lg-2">
-        <label>Puntuacion</label>
+        <label>Puntuación</label>
         <div >
         <select  class="form-control" name="p1" required>
             <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option>
@@ -546,7 +547,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
         <textarea class="form-control" name="comp2" placeholder="Justifica aqui tu puntuación" required></textarea>
         </div>
         <div class="col-lg-2">
-        <label>Puntuacion%</label>
+        <label>Puntuación</label>
         <div >
         <select  class="form-control" name="p2" required>
             <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option>
@@ -561,7 +562,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
         <textarea class="form-control" name="comp3"placeholder="Justifica aqui tu puntuación" required></textarea>
         </div>
         <div class="col-lg-2">
-        <label>Puntuacion</label>
+        <label>Puntuación</label>
         <div >
         <select  class="form-control" name="p3" required>
             <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option>
@@ -576,7 +577,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
         <textarea class="form-control" name="comp4" placeholder="Justifica aqui tu puntuación" required></textarea>
         </div>
         <div class="col-lg-2">
-        <label>Puntuacion</label>
+        <label>Puntuación</label>
         <div >
         <select  class="form-control" name="p4" required>
             <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option>
@@ -591,7 +592,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
         <textarea class="form-control" name="comp5" placeholder="Justifica aqui tu puntuación" required></textarea>
         </div>
         <div class="col-lg-2">
-        <label>Puntuacion</label>
+        <label>Puntuación</label>
         <div >
         <select  class="form-control" name="p5" required>
             <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option>
@@ -609,7 +610,7 @@ $eprow4=mysqli_fetch_array($sqlE4);
         <textarea class="form-control" name="comp6" placeholder="Justifica aqui tu puntuación" required></textarea>
         </div>
         <div class="col-lg-2">
-        <label>Puntuacion</label>
+        <label>Puntuación</label>
         <div >
         <select  class="form-control" name="p6" required>
             <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option>
@@ -624,20 +625,33 @@ $eprow4=mysqli_fetch_array($sqlE4);
         <textarea class="form-control" name="comp7" placeholder="Justifica aqui tu puntuación" required></textarea>
         </div>
         <div class="col-lg-2">
-        <label>Puntuacion</label>
+        <label>Puntuación</label>
         <div >
         <select  class="form-control" name="p7" required>
             <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option>
              </select>
+             <br>
         </div>
         </div>
         <?php } ?>
+        <div class="col-lg-6">
+         <input type="text" class="form-control"  value="<?php echo 'Fortalezas'?>" readonly>
+        </div>  
+        <div class="col-lg-6">
+         <input type="text" class="form-control"  value="<?php echo 'Oportunidades'?>" readonly>
+        </div>  
+        <div class="col-lg-6" >
+        <textarea class="form-control" name="fortalezas" placeholder="Ingresa tus fortalezas"maxlength="250" required></textarea>
+        </div>
+        <div class="col-lg-6" >
+        <textarea class="form-control" name="oportunidades" placeholder="Ingresa tus áreas de Oportunidad"maxlength="250" required></textarea>
+        </div>
         <div class="col-lg-12">
         <br>
          <input type="text" class="form-control"  value="<?php echo 'Comentarios sobre la evaluación'?>" readonly>
         </div>  
         <div class="col-lg-12" >
-        <textarea class="form-control" name="c_evaluado" placeholder="Ingresa un comentario sobre la evaluación" required></textarea>
+        <textarea class="form-control" name="c_evaluado" placeholder="Ingresa un comentario sobre la evaluación"maxlength="250" required></textarea>
         </div>
             <div class="row">
             <div class="col-md-6">
@@ -665,7 +679,11 @@ $eprow4=mysqli_fetch_array($sqlE4);
          <script src="assets/js/jquery-1.10.2.js"></script>
          <!-- Bootstrap Js CDN -->
          <script src="assets/js/bootstrap.min.js"></script>
-
+         <script type="text/javascript">
+    if (window.history.replaceState) { // verificamos disponibilidad
+    window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
          <script type="text/javascript">
              $(document).ready(function () {
                  $('#sidebarCollapse').on('click', function () {

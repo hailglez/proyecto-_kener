@@ -27,10 +27,10 @@
  
     <body>
     <div class="wrapper">
-            <!-- Sidebar Holder -->
-            <nav id="sidebar" class="sammacmedia">
+           <!-- Sidebar Holder -->
+           <nav id="sidebar" class="sammacmedia">
                 <div class="sidebar-header">
-                    <h3>FÓRMULA KENER</h3>
+                <img src="assets/image/lg1.png" class="img-thumbnail">
                     <strong> </strong>
                 </div>
                 <ul class="list-unstyled components">
@@ -40,13 +40,13 @@
                            Inicio</a>
                     </li>
                     <?php
-                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==3
+                    if($_SESSION['permission']==1 or $_SESSION['permission']==2  or $_SESSION['permission']==2.5 or $_SESSION['permission']==3
                     or $_SESSION['permission']==4){ 
                     ?>
                     <li>
                     <a href="a_objetivos.php">
                             <i class="fa fa-plus"></i>
-                            Establecer de Objetivos </a>
+                            Establecer Objetivos </a>
                     </li>
                     <?php }?>
                     <li >
@@ -71,7 +71,7 @@
                     </li>
                    
                               <?php
-                    if($_SESSION['permission']==2or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
+                    if($_SESSION['permission']==2 or $_SESSION['permission']==2.5 or $_SESSION['permission']==3 or $_SESSION['permission']==4 ){
                         ?>
                         <li>  
                         <a href="validacion.php">
@@ -91,7 +91,7 @@
                             </li>
                         <?php }?>
                              <?php
-                    if($_SESSION['permission']==3 or $_SESSION['permission']==4){
+                    if($_SESSION['permission']==3 or $_SESSION['permission']==2.5 or $_SESSION['permission']==4){
                     ?>
                      <li>
                             <a href="validacion1+1.php">
@@ -265,7 +265,7 @@
         
    
       while($eprow2 = mysqli_fetch_array($resultado3))
-      if( $_SESSION['username']== $eprow2['eva1']) if($eprow2['estado']=='4') {
+      if( $_SESSION['username']== $eprow2['eva1']) if($eprow2['estado']=='5') {
     
         echo "<tr>";
          echo "<td>";
@@ -333,8 +333,8 @@
             </div>
             <div class="col-lg-2">
             <label>El objetivo se:</label><br>
-                <label><input type="radio" name="estado" value="3">Envia a revisión</label><br>
-                <label><input type="radio" name="estado" value="8">Acepta</label><br>
+            <label><input type="radio" name="estado" value="8">Acepta</label><br>
+            <label><input type="radio" name="estado" value="4">Envia a revisión</label><br>
             </div>
             <div class="col-lg-4">
             <label>Justificación</label>
@@ -399,14 +399,17 @@ if($eprow4['type']=='Evaluacion Final'){
          $queryUpdate = "UPDATE $tabla INNER JOIN historico ON $tabla.case_num = historico.case_num
          SET $tabla.notes= '".$_POST['notes']."', $tabla.estado = '".$_POST['estado']."',
             $tabla.severity = '".$_POST['severity']."', $tabla.justificacionm = '".$_POST['justificacionm']."',
-            $tabla.calificacionm = '".$_POST['calificaciona']."',
+            $tabla.calificacionm = '".$_POST['calificaciona']."',$tabla.periodo3 = '".$_POST['periodo3']."',
             historico.notes = '".$_POST['notes']."', historico.estado = '".$_POST['estado']."',  
             historico.severity = '".$_POST['severity']."', historico.justificacionm = '".$_POST['justificacionm']."',
-            historico.calificacionm = '".$_POST['calificaciona']."'
+            historico.calificacionm = '".$_POST['calificaciona']."',historico.periodo3 = '".$_POST['periodo3']."'
             WHERE $tabla.id = ".$_POST['idForm'].";";
-
          $resultUpdate = mysqli_query($link, $queryUpdate); 
-            
+         
+         if($_POST['estado']==11){
+            $query2="DELETE FROM $tabla WHERE id = '".$_POST['idForm']."' LIMIT 1";
+            $resultUpda = mysqli_query($link,$query2);
+         }
 
          if($resultUpdate)
          { 
@@ -508,6 +511,7 @@ if($eprow4['type']=='Evaluacion Final'){
       <form action="evaluacion.php" method="post">
          <input type="hidden" value="<?=$rowSelectByID['id'];?>" name="idForm">
          <input type="hidden" value="<?=$rowSelectByID['calificaciona'];?>" name="calificaciona">
+         <input type="hidden" value="<?=$eprow4['fechai']," ", $eprow4['fechaf']," ", $eprow4['type'];?>" name="periodo3">
          <input type="hidden" value="En Proceso" name="severity">
          <div class="row form-group">
          <div class="col-lg-2">
@@ -518,9 +522,11 @@ if($eprow4['type']=='Evaluacion Final'){
             <label>Objetivo</label>
               <input type="text" class="form-control" name="notes" value="<?php echo $rowSelectByID['notes'];?>" readonly>
             </div>
+            <?php if($_SESSION['permission']==1  or $_SESSION['permission']==2) {  
+               ?> 
             <div class="col-lg-2">
             <label>Enviar objetivo a:</label><br>
-                <label><input type="radio" name="estado" value="5">Revisión</label><br>
+                <label><input type="radio" name="estado" value="8">Revisión</label><br>
                 <label><input type="radio" name="estado" value="10">Validacion 1+1</label><br>
             </div>
             <div class="col-lg-4">
@@ -534,7 +540,25 @@ if($eprow4['type']=='Evaluacion Final'){
                   <button type="submit" value="Guardar" name="submit" class="btn btn-warning">Aceptar</button>  
                 </div>
                 </div>
-         
+                <?php } ?>  
+                <?php if( $_SESSION['permission']==3){  ?> 
+                    <div class="col-lg-2">
+            <label>Enviar objetivo a:</label><br>
+                <label><input type="radio" name="estado" value="8">Revisión</label><br>
+                <label><input type="radio" name="estado" value="11">Conclusión</label><br>
+            </div>
+            <div class="col-lg-4">
+            <label>Justificación</label>
+            <textarea class="form-control"name="justificacionm" placeholder=" Describe tu justificación" required></textarea>
+            </div>
+                <div class="col-lg-2">
+                <label>Enviar</label>
+                <div class="row form-group">
+                <div class="col-lg-3">
+                  <button type="submit" value="Guardar" name="submit" class="btn btn-warning">Aceptar</button>  
+                </div>
+                </div>
+                <?php } ?>  
       </form> 
       <?php
       }

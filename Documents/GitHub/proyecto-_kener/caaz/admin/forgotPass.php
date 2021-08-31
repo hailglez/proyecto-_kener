@@ -55,14 +55,15 @@
                     if($resTaru==1){
                         ?>
                        <script type="text/javascript">
-                                    alert("Perfecto, cambiaste tu contraseña con exito");
+                                    alert("Listo, se envio un codigo a tu correo para recuperar tu contraseña");
                                     window.location.href='token.php';
                                     </script>';
+                                    <?php
                     }else{
                     ?>
                 <div class="alert alert-warning samuel animated shake" id="sams1">
                           <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong> Successfully </strong><?php echo'OOPS algo salió mal';?></div>
+                        <strong> ¡Error! </strong><?php echo' algo salió mal';?></div>
                 <?php
                     }
 
@@ -79,7 +80,7 @@ $email_from="mesa.ayuda@kener.com.mx";
 $headers = 'From: '.$email_from."\r\n".
 'Reply-To: '.$email_from."\r\n" .
 'X-Mailer: PHP/' . phpversion();
-@mail($email_to, $email_subject, $email_message, $headers);
+@mail($email_to,  "=?UTF-8?B?".base64_encode($email_subject)."?=", $email_message, $headers);
 }
 }
 }
